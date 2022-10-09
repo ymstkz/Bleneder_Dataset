@@ -14,6 +14,7 @@ for i in range(1, 0):
     # rotation
     rotate[0] = random.uniform(0, 0.87)
     rotate[1] = random.uniform(-0.87, 0.87)
+    
     bpy.data.objects["light_red"].rotation_euler[1]   = rotate[0]
     bpy.data.objects["light_red"].rotation_euler[2]   = rotate[1]
     bpy.data.objects["light_body"].rotation_euler[1]  = rotate[0]
