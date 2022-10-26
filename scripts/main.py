@@ -19,19 +19,20 @@ import time
 ### set parameters 
 ###################################
 target_model       = "traffic_light_green"
-num_of_photo       = 30000
+num_of_photo       = 50000
 dataset_offset     = 0
 
-background_img_dir = "/media/slab/LAP_CHOL_DATA_2/contest_dataset/background/"
-output_dir         = "/media/slab/LAP_CHOL_DATA_2/contest_dataset/ymstkz/"
+
+background_img_dir = "/media/ymstkz/LAP_CHOL_DATA_2/contest_dataset/background/car/"
+output_dir         = "/media/ymstkz/LAP_CHOL_DATA_2/contest_dataset/ymstkz/"
 dt                 = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
 out_dir            = output_dir + target_model + "/" + dt + "/"
-out_label_dir      = out_dir + "label/"
-out_image_dir      = out_dir + "image/"
-out_debug_dir      = out_dir + "debug/"
+out_label_dir      = out_dir + "labels/"
+out_image_dir      = out_dir + "images/"
+out_debug_dir      = out_dir + "debugs/"
 digit              = 10
 use_gpu            = True
-debug              = True
+debug              = False
 resolution_x       = 1280
 resolution_y       = 720
 
@@ -95,7 +96,7 @@ def random_setting(target):
     
     # lighting
     if target_model == "traffic_light_red":
-        scale = random.uniform(0.3, 1.1)
+        scale = random.uniform(0.2, 1.0)
         location = [random.uniform(-0.4, 1.0), random.uniform(-0.5, 0.5)]
         rotate = [random.uniform(-0.6, 0.1), 0, random.uniform(-0.3, 0.3)]
         target.scale[0]            = scale
@@ -106,12 +107,12 @@ def random_setting(target):
         target.rotation_euler[0]   = rotate[0]
         target.rotation_euler[1]   = rotate[1]
         target.rotation_euler[2]   = rotate[2]
-        bpy.data.materials[target_model].node_tree.nodes["Principled BSDF"].inputs[20].default_value = random.uniform(0.5, 12)
+        bpy.data.materials[target_model].node_tree.nodes["Principled BSDF"].inputs[20].default_value = random.uniform(0.5, 10)
         hue = random.uniform(0.95,1) if random.randint(0,1) else random.uniform(0,0.05)
         rgb = colorsys.hsv_to_rgb(hue, random.uniform(0,1), 1)
         bpy.data.materials[target_model].node_tree.nodes["カラーランプ"].color_ramp.elements[1].color = (rgb[0], rgb[1], rgb[2], 1)
         
-        bpy.data.materials["traffic_light_body"].node_tree.nodes["Principled BSDF.001"].inputs[7].default_value = random.uniform(0, 0.3)
+        bpy.data.materials["traffic_light_body"].node_tree.nodes["Principled BSDF.001"].inputs[7].default_value = random.uniform(0, 0.2)
         rand = random.uniform(0.1, 0.9)
         bpy.data.materials["traffic_light_body"].node_tree.nodes["RGB.002"].outputs[0].default_value = (rand, rand, rand, 1)
         rand = random.uniform(0.2, 0.9)
